@@ -1,5 +1,6 @@
 import java.util.Scanner;
 public class JogoDaForca {
+    private String letrasUsadas = "";
     private String palavraSecreta;
     private StringBuilder palavraOculta;
     private int tentativasRestantes;
@@ -20,6 +21,7 @@ public class JogoDaForca {
     public void exibirStatus() {
         System.out.println("Palavra: " + palavraOculta);
         System.out.println("Tentativas restantes: " + tentativasRestantes);
+        System.out.println("Letras usadas: " + letrasUsadas);
     }
 
     public static void main(String[] args) {
@@ -51,6 +53,18 @@ public class JogoDaForca {
     }
 
     public boolean tentarLetra(char letra) {
+        if (!Validador.isLetraValida(letra)) {
+            System.out.println("Digite apenas letras!");
+            return false;
+        }
+
+        if (Validador.isLetraJaUsada(letra, letrasUsadas)) {
+            System.out.println("Você já tentou essa letra!");
+            return false;
+        }
+
+        letrasUsadas = Validador.adicionarLetraUsada(letra, letrasUsadas);
+
         letra = Character.toLowerCase(letra);
         boolean acertou = false;
 
