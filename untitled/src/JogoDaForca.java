@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public class JogoDaForca {
     private String palavraSecreta;
     private StringBuilder palavraOculta;
@@ -22,10 +23,33 @@ public class JogoDaForca {
     }
 
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         JogoDaForca jogo = new JogoDaForca("java");
-        jogo.exibirStatus();
+
+        System.out.println("=== JOGO DA FORCA ===\n");
+
+        while (!jogo.isJogoGanho() && !jogo.isJogoPerdido()) {
+            jogo.exibirStatus();
+            System.out.print("\nDigite uma letra: ");
+            char letra = scanner.next().charAt(0);
+
+            if (jogo.tentarLetra(letra)) {
+                System.out.println("Acertou!");
+            } else {
+                System.out.println("Errou!");
+            }
+            System.out.println();
+        }
+
+        if (jogo.isJogoGanho()) {
+            System.out.println("Parabéns! Você ganhou!");
+        } else {
+            System.out.println("Game Over! A palavra era: " + jogo.palavraSecreta);
+        }
+
+        scanner.close();
     }
-    
+
     public boolean tentarLetra(char letra) {
         letra = Character.toLowerCase(letra);
         boolean acertou = false;
